@@ -83,7 +83,7 @@ function BusNow({ navigation }) {
     const { latitude, longitude } = event.nativeEvent.coordinate;
     try {
       // Query nearby bus stops using Digitransit API
-      const stops = await fetchStopsByRadius(latitude, longitude, 50);
+      const stops = await fetchStopsByRadius(latitude, longitude, 30);
       if (stops.length > 0) {
         // Assuming you want to navigate to the first stop in the list
         navigation.navigate('Bussit', { stopId: stops[0].gtfsId });
