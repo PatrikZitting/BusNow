@@ -35,7 +35,27 @@ export async function fetchStopIdByNameOrNumber(nameOrNumber) {
   
     const data = await fetchGraphQLData(query);
     return data.data.stops; // Array of stops
-  }
-  
+}
+
+// Fetch nearby stops by radius from DigiTransit API
+export async function fetchStopsByRadius(lat, lon, radius) {
+  const query = `
+    {
+      stopsByRadius(lat:${lat}, lon:${lon}, radius:${radius}) {
+        edges {
+          node {
+            stop {
+              gtfsId
+              name
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const data = await fetchGraphQLData(query);
+  return data.data.stopsByRadius.edges.map(edge => edge.node.stop);
+}
 
 export default fetchGraphQLData;

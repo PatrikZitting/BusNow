@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './screens/HomeScreen';
-import BusStopDetailsScreen from './screens/BusStopDetailsScreen';
+import BusNow from './screens/BusNow';
+import Bussit from './screens/Bussit';
 import { init } from './database';
 
 const Stack = createStackNavigator();
@@ -33,14 +33,14 @@ function App() {
           },
         }}
       >
-        <Stack.Screen 
-          name="BusNow" 
-          component={HomeScreen} 
+        <Stack.Screen
+          name="BusNow"
+          component={BusNow}
           options={{ title: 'BusNow' }}
         />
-        <Stack.Screen 
-          name="Bussit" 
-          component={BusStopDetailsScreen} 
+        <Stack.Screen
+          name="Bussit"
+          component={Bussit}
           options={{ title: 'Bussit' }}
         />
       </Stack.Navigator>
@@ -49,4 +49,3 @@ function App() {
 }
 
 export default App;
-

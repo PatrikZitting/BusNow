@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, FlatList, StyleSheet, Button, Modal, TextInput, Alert } from 'react-native';
+import { View, Text, ActivityIndicator, FlatList, StyleSheet, Button, Modal, TextInput, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import fetchGraphQLData from '../api';
 import { saveStopToDB } from '../database';
 
-function BusStopDetailsScreen({ route }) {
+function Bussit({ route }) {
   const { stopId } = route.params; // gtfsId passed from HomeScreen
   const [stopDetails, setStopDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,7 +64,7 @@ function BusStopDetailsScreen({ route }) {
     }
     setModalVisible(false);
   };
-  
+
   // Rendering timetables
   const renderItem = ({ item }) => (
     <View style={styles.listItem}>
@@ -83,34 +83,39 @@ function BusStopDetailsScreen({ route }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Lähtöpysäkki: {stopDetails.name}</Text>
-      <FlatList
-        data={stopDetails.stoptimesWithoutPatterns}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
-      <Button title="Tallenna pysäkki" onPress={() => setModalVisible(true)} color="#0B3B24"/>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <View style={styles.content}>
+        <Text style={styles.title}>Lähtöpysäkki: {stopDetails.name}</Text>
+        <FlatList
+          data={stopDetails.stoptimesWithoutPatterns}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
+        <Button title="Tallenna pysäkki" onPress={() => setModalVisible(true)} color="#0B3B24" />
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(!modalVisible)}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <TextInput
-              placeholder="Nimeä pysäkki"
-              value={stopName}
-              onChangeText={setStopName}
-              style={styles.modalTextInput}
-            />
-            <Button title="Tallenna" onPress={saveStop} color="#0B3B24"/>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(!modalVisible)}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <TextInput
+                placeholder="Nimeä pysäkki"
+                value={stopName}
+                onChangeText={setStopName}
+                style={styles.modalTextInput}
+              />
+              <Button title="Tallenna" onPress={saveStop} color="#0B3B24" />
+            </View>
           </View>
-        </View>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -120,6 +125,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: '#F7F2E0',
+  },
+  content: {
+    flex: 1,
   },
   title: {
     fontSize: 20,
@@ -174,4 +182,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BusStopDetailsScreen;
+export default Bussit;
