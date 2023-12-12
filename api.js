@@ -1,5 +1,6 @@
 import { DIGITRANSIT_API_KEY } from '@env';
 
+// Details for fetching from DigiTransit API
 async function fetchGraphQLData(query, variables = {}) {
   const url = 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql';
   const response = await fetch(url, {
@@ -18,6 +19,7 @@ async function fetchGraphQLData(query, variables = {}) {
   return response.json();
 }
 
+// Fetch gtfsId by using name/number of stop from DigiTransit API
 export async function fetchStopIdByNameOrNumber(nameOrNumber) {
     const query = `
       {

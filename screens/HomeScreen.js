@@ -15,40 +15,44 @@ function HomeScreen({ navigation }) {
     }, [])
   );
 
+  // Fetching saved stops from db
   const fetchSavedStops = async () => {
     try {
       const stops = await loadSavedStops();
       setSavedStops(stops);
     } catch (error) {
-      Alert.alert('Virhe', 'Tallennettujen pysäkkien lataus epäonnistui');
+      Alert.alert('Virhe', 'Tallennettujen pysäkkien lataus epäonnistui!');
     }
   };
 
+  // Deleting saved stops from db
   const handleDeleteStop = async (id) => {
     try {
       await deleteStopById(id);
       fetchSavedStops();
-      Alert.alert("Poistettu", "Pysäkin poistaminen onnistui");
+      Alert.alert("Poistettu", "Pysäkin poistaminen onnistui!");
     } catch (error) {
       console.error("Error deleting stop:", error);
-      Alert.alert("Virhe", "Pysäkin poisto epäonnistui");
+      Alert.alert("Virhe", "Pysäkin poisto epäonnistui!");
     }
   };
 
+  // Initial stop-id fetch by using name or number of the stop
   const handleSearch = async () => {
     try {
       const stops = await fetchStopIdByNameOrNumber(query);
       if (stops.length > 0) {
         navigation.navigate('Bussit', { stopId: stops[0].gtfsId });
       } else {
-        Alert.alert('Pysäkkiä ei löydetty', 'Yritä uudella numerolla');
+        Alert.alert('Virhe', 'Pysäkkiä ei löydetty, yritä uudella numerolla!');
       }
     } catch (error) {
       console.error("Error fetching stops:", error);
-      Alert.alert('Virhe', 'Pysäkkitietojen haku epäonnistui');
+      Alert.alert('Virhe', 'Pysäkkitietojen haku epäonnistui!');
     }
   };
 
+  // Rendering
   const renderItem = ({ item }) => (
     <View style={styles.stopItem}>
       <Button
@@ -57,7 +61,7 @@ function HomeScreen({ navigation }) {
         color="#0B3B24"
       />
       <Button
-        title="Delete"
+        title="Poista"
         onPress={() => handleDeleteStop(item.id)}
         color="#943b2b"
       />
@@ -84,6 +88,7 @@ function HomeScreen({ navigation }) {
   );
 }
 
+// Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -10,6 +10,7 @@ function BusStopDetailsScreen({ route }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [stopName, setStopName] = useState('');
 
+  // Fetching timetable
   useEffect(() => {
     const fetchTimetable = async () => {
       try {
@@ -52,6 +53,7 @@ function BusStopDetailsScreen({ route }) {
     return date.toLocaleTimeString('fi-FI', { hour: '2-digit', minute: '2-digit' });
   };
 
+  // Saving a stop
   const saveStop = async () => {
     try {
       await saveStopToDB({ id: stopId, name: stopName });
@@ -63,10 +65,12 @@ function BusStopDetailsScreen({ route }) {
     setModalVisible(false);
   };
   
+  // Rendering timetables
   const renderItem = ({ item }) => (
     <View style={styles.listItem}>
       <Text style={styles.headsign}>Päätepysäkki: {item.headsign}</Text>
-      <Text>Saapumisaika: {formatTime(item.realtimeArrival)}</Text>
+      <Text>Aikataulun saapumisaika: {formatTime(item.scheduledArrival)}</Text>
+      <Text>Reaaliaikainen saapumisaika: {formatTime(item.realtimeArrival)}</Text>
     </View>
   );
 
@@ -110,6 +114,7 @@ function BusStopDetailsScreen({ route }) {
   );
 }
 
+// Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
