@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, FlatList, StyleSheet, Button, Modal, TextInput, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import fetchGraphQLData from '../api';
 import { saveStopToDB } from '../database';
+import { StatusBar } from 'react-native';
 
 function Bussit({ route }) {
   const { stopId } = route.params; // gtfsId passed from HomeScreen
@@ -83,41 +84,44 @@ function Bussit({ route }) {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <View style={styles.content}>
-        <Text style={styles.title}>Lähtöpysäkki: {stopDetails.name}</Text>
-        <FlatList
-          data={stopDetails.stoptimesWithoutPatterns}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-        />
-        <Button title="Tallenna pysäkki" onPress={() => setModalVisible(true)} color="#0B3B24" />
-
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(!modalVisible)}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <TextInput
-                placeholder="Nimeä pysäkki"
-                value={stopName}
-                onChangeText={setStopName}
-                style={styles.modalTextInput}
-              />
-              <Button title="Tallenna" onPress={saveStop} color="#0B3B24" />
+    <>
+      <StatusBar backgroundColor="#0B3B24" barStyle="light-content" />
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View style={styles.content}>
+          <Text style={styles.title}>Lähtöpysäkki: {stopDetails.name}</Text>
+          <FlatList
+            data={stopDetails.stoptimesWithoutPatterns}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+          <Button title="Tallenna pysäkki" onPress={() => setModalVisible(true)} color="#0B3B24" />
+  
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(!modalVisible)}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <TextInput
+                  placeholder="Nimeä pysäkki"
+                  value={stopName}
+                  onChangeText={setStopName}
+                  style={styles.modalTextInput}
+                />
+                <Button title="Tallenna" onPress={saveStop} color="#0B3B24" />
+              </View>
             </View>
-          </View>
-        </Modal>
-      </View>
-    </KeyboardAvoidingView>
+          </Modal>
+        </View>
+      </KeyboardAvoidingView>
+    </>
   );
-}
+} 
 
 // Styling
 const styles = StyleSheet.create({

@@ -6,6 +6,8 @@ import { loadSavedStops, deleteStopById } from '../database';
 import { useFocusEffect } from '@react-navigation/native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
+import { StatusBar } from 'react-native';
+
 
 function BusNow({ navigation }) {
   const [query, setQuery] = useState('');
@@ -113,40 +115,43 @@ function BusNow({ navigation }) {
   );
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <View style={styles.content}>
-        <TextInput
-          style={styles.input}
-          placeholder="Syötä pysäkin numero (esim. H1658)"
-          value={query}
-          onChangeText={setQuery}
-        />
-        <View style={styles.buttonContainer}>
-          <Button title="Hae aikataulu" onPress={handleSearch} color="#0B3B24" />
-        </View>
-        <FlatList
-          data={savedStops}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      </View>
-      {region ? (
-        <View style={styles.mapContainer}>
-          <MapView
-            provider={PROVIDER_GOOGLE}
-            style={styles.map}
-            region={region}
-            showsUserLocation={true}
-            onPress={handleMapPress}
+    <>
+      <StatusBar backgroundColor="#0B3B24" barStyle="light-content" />
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View style={styles.content}>
+          <TextInput
+            style={styles.input}
+            placeholder="Syötä pysäkin numero (esim. H1658)"
+            value={query}
+            onChangeText={setQuery}
+          />
+          <View style={styles.buttonContainer}>
+            <Button title="Hae aikataulu" onPress={handleSearch} color="#0B3B24" />
+          </View>
+          <FlatList
+            data={savedStops}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
           />
         </View>
-      ) : (
-        <ActivityIndicator size="large" color="#0000ff" />
-      )}
-    </KeyboardAvoidingView>
+        {region ? (
+          <View style={styles.mapContainer}>
+            <MapView
+              provider={PROVIDER_GOOGLE}
+              style={styles.map}
+              region={region}
+              showsUserLocation={true}
+              onPress={handleMapPress}
+            />
+          </View>
+        ) : (
+          <ActivityIndicator size="large" color="#0000ff" />
+        )}
+      </KeyboardAvoidingView>
+    </>
   );
 }
 
