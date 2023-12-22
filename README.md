@@ -1,7 +1,18 @@
-# README.md for BusNow Mobile App
+# BusNow Mobile App
 
 ## Overview
 BusNow is a mobile application designed to enhance the experience of using public bus transportation. It provides users with quick access to bus timetables, the ability to save bus stop locations for later use, and the functionality to select bus stops directly from a map interface. The app displays the timetable for the next five buses at the selected station, including their scheduled and real-time estimated arrival times. The catch is that this application is very useful to those who already know which bus they are going to catch and from where, but just need to quickly check the timetables. So in essence, it's made for the everyday-routine public transportation, like going to work, school or say, a hobby. The application was designed with quick access and speed in mind.
+
+## Table of Contents
+
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [APIs Used](#apis-used)
+- [Prerequisites](#prerequisites)
+- [Installation and Setup](#installation-and-setup)
+- [Running the App](#running-the-app)
+- [Note](#note)
 
 ## Screenshots
 ![1BusNow](https://github.com/PatrikZitting/BusNow/assets/118559347/98b376d7-3003-4990-886d-00de9479820a)![2BusNow](https://github.com/PatrikZitting/BusNow/assets/118559347/f5e2d01f-28d3-45c2-b3ff-545763723536)
